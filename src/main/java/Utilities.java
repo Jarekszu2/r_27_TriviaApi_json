@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import model.api.TriviaResponse;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 class Utilities {
     private static final Gson GSON = new Gson();
@@ -31,6 +33,9 @@ class Utilities {
 
     TriviaResponse getTriviaApiResponse(String apiUrl) {
         String apiContent = loadApiContentByStream(apiUrl);
-        return GSON.fromJson(apiContent, TriviaResponse.class);
+        TriviaResponse triviaResponse = GSON.fromJson(apiContent, TriviaResponse.class);
+        triviaResponse.getResults()
+                .forEach(triviaQuestion -> triviaQuestion.setQuestion(StringEscapeUtils.unescapeHtml4(triviaQuestion.getQuestion())));
+        return triviaResponse;
     }
 }

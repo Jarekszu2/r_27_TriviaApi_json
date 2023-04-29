@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-class TriviaQuestion {
+public class TriviaQuestion {
 
     private String category;
     private String type;
