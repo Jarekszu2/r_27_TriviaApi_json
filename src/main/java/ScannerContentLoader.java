@@ -1,7 +1,7 @@
-import model.game.GameCategory;
-import model.game.GameDifficulty;
-import model.game.GameParameters;
-import model.game.GameType;
+import model.models_urlParameters.GameCategory;
+import model.models_urlParameters.GameDifficulty;
+import model.models_urlParameters.GameParameters;
+import model.models_urlParameters.GameType;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -108,5 +108,21 @@ public class ScannerContentLoader {
                 System.err.println("Bad choice.");
             }
         } while (gameParameters.getType() == null);
+    }
+
+    public String loadAnswer() {
+        String answer;
+        char sign;
+        do {
+            System.out.println();
+            System.out.println("Podaj odpowiedź:");
+            answer = scanner.next();
+            sign = answer.toLowerCase().charAt(0);
+            if (sign < 'a' || sign > 'd') {
+                System.err.println("Bad choice.");
+            }
+        } while (sign < 'a' || sign > 'd');
+
+        return answer;
     }
 }

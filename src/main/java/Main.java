@@ -1,8 +1,7 @@
-import model.api.TriviaResponse;
-import model.game.GameDifficulty;
-import model.game.GameParameters;
-
-import java.util.Map;
+import model.modelsFromApi.TriviaResponse;
+import model.modelsToGame.GameQuestion;
+import model.modelsToGame.TriviaGame;
+import model.models_urlParameters.GameParameters;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,22 +24,29 @@ public class Main {
 
         System.out.println();
         TriviaResponse triviaResponse = utilities.getTriviaApiResponse(gameUrl);
-        System.out.println(triviaResponse);
+//        System.out.println(triviaResponse);
 
-//        System.out.println();
-//        int test1 = 5;
-//        System.out.println(scannerContentLoader.checkIfIdIsInEnum(test1));
-//
-//        System.out.println();
-//        int test2 = 23;
-//        System.out.println(scannerContentLoader.checkIfIdIsInEnum(test2));
+        if (triviaResponse.getResponse_code() == 0) {
+            TriviaGame game = new TriviaGame(triviaResponse);
 
-//        System.out.println();
-//        scannerContentLoader.printEnum();
-//
-//        System.out.println();
-//        Map<Character, GameDifficulty> characterGameDifficultyMap = scannerContentLoader.getMap_Character_GameDifficulty();
-//        characterGameDifficultyMap.forEach((k, v) -> System.out.println(k + ") " + v.toString()));
+            while (!game.gameEnded()){
+                GameQuestion gameQuestion = game.getCurrentGameQuestion();
+
+                System.out.println(gameQuestion.getQuestion());
+                System.out.println();
+                char[] tab = new char[] {'a'};
+                gameQuestion.getAnswers()
+                        .forEach(gameAnswer -> System.out.println(tab[0]++ + ") " + gameAnswer.getContent()));
+
+                String answer = scannerContentLoader.loadAnswer();
+
+                game.submitAnswer(answer);
+            }
+            long score = game.getGameQuestionList().stream()
+                    .filter(gameQuestion -> gameQuestion.getSelectedAnswer().isCorrect())
+                    .count();
+            System.out.println("Result: " + score + "/" + game.getGameQuestionList().size() + ".");
+        }
     }
 
 

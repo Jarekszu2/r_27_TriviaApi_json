@@ -1,4 +1,4 @@
-package model.game;
+package model.models_urlParameters;
 
 import lombok.Data;
 

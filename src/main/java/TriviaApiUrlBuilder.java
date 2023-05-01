@@ -1,7 +1,7 @@
-import model.game.GameCategory;
-import model.game.GameDifficulty;
-import model.game.GameParameters;
-import model.game.GameType;
+import model.models_urlParameters.GameCategory;
+import model.models_urlParameters.GameDifficulty;
+import model.models_urlParameters.GameParameters;
+import model.models_urlParameters.GameType;
 
 class TriviaApiUrlBuilder {
 
